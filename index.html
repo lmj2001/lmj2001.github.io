@@ -69,6 +69,123 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-第八天" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2021/07/20/%E7%AC%AC%E5%85%AB%E5%A4%A9/" class="article-date">
+  <time datetime="2021-07-20T00:34:49.000Z" itemprop="datePublished">2021-07-20</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/07/20/%E7%AC%AC%E5%85%AB%E5%A4%A9/">第八篇博客</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="回顾lxml"><a href="#回顾lxml" class="headerlink" title="回顾lxml"></a>回顾lxml</h2><h3 id="要点"><a href="#要点" class="headerlink" title="要点"></a>要点</h3><h4 id="1-导入XPath解析器"><a href="#1-导入XPath解析器" class="headerlink" title="1. 导入XPath解析器"></a>1. 导入XPath解析器</h4><p><code>from lxml import tree</code></p>
+<h4 id="2-将html-text解析为xpath文档"><a href="#2-将html-text解析为xpath文档" class="headerlink" title="2. 将html_text解析为xpath文档"></a>2. 将html_text解析为xpath文档</h4><p><code>selector = etree.HTML(html_text)</code></p>
+<h4 id="3-一次性页面数据的定位和提取"><a href="#3-一次性页面数据的定位和提取" class="headerlink" title="3. 一次性页面数据的定位和提取"></a>3. 一次性页面数据的定位和提取</h4><h5 id="定位"><a href="#定位" class="headerlink" title="定位"></a>定位</h5><p>/ 从根目录开始寻找</p>
+<ul>
+<li><p>定位字符串首字符,从根目录开始查询定位</p>
+</li>
+<li><p>定位字符串的中间:上一个元素的直接(下一个)子元素</p>
+</li>
+</ul>
+<p>// 相对定位</p>
+<ul>
+<li><p>定位字符串首字符,在整个文档中遍历查询定位</p>
+</li>
+<li><p>定位字符串的中间:上一个元素的间接子元素(后代中的某一个)</p>
+</li>
+</ul>
+<p>/ or// 后续字符</p>
+<ul>
+<li><p>* 任意字符-任意标签名称元素</p>
+</li>
+<li><p>具体字符串——指定标签名称的元素</p>
+</li>
+</ul>
+<p>[ ] 对于元素的限定的查询,对标签元素的查询条件</p>
+<ul>
+<li>@ 标签元素中属性值的提取,并根据属性值完成查询定位</li>
+<li> text()  获取标签元素的文本值,并根据文本值的定位查询 </li>
+<li>text()==‘str</li>
+<li>[contains(text(),“str”)]</li>
+</ul>
+<p>tai 定位到某一个元素的下一个元素</p>
+<h5 id="提取"><a href="#提取" class="headerlink" title="提取"></a>提取</h5><p>[@属性名] : 放在定位字符串的末端,提取定位标签的指定属性值</p>
+<p>[text()] : 放在定位字符串的末端,提取定位标签体的文本值</p>
+<p><strong>提取的返回值可能是list,可能需要指定list中的某一元素,一般是[0] (第一个元素)</strong></p>
+<h3 id="python-spider"><a href="#python-spider" class="headerlink" title="python spider"></a>python spider</h3><p>随机选取某个user-agent</p>
+<p>status_code == 418 : 没有加入request_headers参数</p>
+<p>跨页爬取</p>
+<h2 id="总结-爬虫代码的本质-amp-关键"><a href="#总结-爬虫代码的本质-amp-关键" class="headerlink" title="总结:爬虫代码的本质 &amp; 关键"></a>总结:爬虫代码的本质 &amp; 关键</h2><h3 id="1-分析并获取要爬取数据所在的url-关键"><a href="#1-分析并获取要爬取数据所在的url-关键" class="headerlink" title="1. 分析并获取要爬取数据所在的url(关键)"></a>1. 分析并获取要爬取数据所在的url(关键)</h3><p>uri(html页面、资源名称&lt;文件&gt;)</p>
+<h3 id="2-封装请求"><a href="#2-封装请求" class="headerlink" title="2.封装请求"></a>2.封装请求</h3><p>需要封装:</p>
+<p>​    请求参数、请求方法、请求数据、请求url</p>
+<h3 id="3-发送请求-获取响应"><a href="#3-发送请求-获取响应" class="headerlink" title="3. 发送请求,获取响应"></a>3. 发送请求,获取响应</h3><p>获取响应头==获取状态码</p>
+<p>将响应的内容转化为要处理的数据</p>
+<h3 id="4-处理响应数据"><a href="#4-处理响应数据" class="headerlink" title="4. 处理响应数据"></a>4. 处理响应数据</h3><p>html_text : 使用解析、定位、提取</p>
+<p>资源文件: 资源下载 ——IO</p>
+<h2 id="Java-Splider"><a href="#Java-Splider" class="headerlink" title="Java Splider"></a>Java Splider</h2><h3 id="URL-资源环境"><a href="#URL-资源环境" class="headerlink" title="URL==资源环境"></a>URL==资源环境</h3><p>new maven project ==无骨架</p>
+<h4 id="TestUrl"><a href="#TestUrl" class="headerlink" title="TestUrl"></a>TestUrl</h4><ol>
+<li><p>声明待爬取页面的url字符串</p>
+</li>
+<li><p>创建基于URL字符串的URL对象</p>
+</li>
+<li><p>基于URL对象打开远程资源的InputStream</p>
+</li>
+<li><p>借助javaIO完成对资源的获取</p>
+</li>
+</ol>
+<h4 id="GetIMDBVideo"><a href="#GetIMDBVideo" class="headerlink" title="GetIMDBVideo"></a>GetIMDBVideo</h4><ol>
+<li>声明待爬取页面的url字符串</li>
+<li>创建基于URL字符串的URL对象</li>
+<li>基于URL对象的HttpURLConnection</li>
+<li>(可选)基于HttpURLConnection完成请求封装</li>
+<li>基于HttpURLConnection获取响应</li>
+<li>基于HttpURLConnection获取输入流</li>
+</ol>
+<h3 id="JSoup-解析、定位、提取、下载html页面中的数据"><a href="#JSoup-解析、定位、提取、下载html页面中的数据" class="headerlink" title="JSoup==解析、定位、提取、下载html页面中的数据"></a>JSoup==解析、定位、提取、下载html页面中的数据</h3><h5 id="1-添加依赖"><a href="#1-添加依赖" class="headerlink" title="1. 添加依赖"></a>1. 添加依赖</h5><p>Baidu: mvn jsoup</p>
+<p>加入</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- https://mvnrepository.com/artifact/org.jsoup/jsoup --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.jsoup<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jsoup<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.13.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h5 id="2-new-class"><a href="#2-new-class" class="headerlink" title="2. new class"></a>2. new class</h5><ol>
+<li><p>分析并获取要爬取数据所在的页面的url</p>
+</li>
+<li><p>创建基于Jsoup的该url的connection</p>
+</li>
+<li><p>封装请求(头)参数</p>
+</li>
+<li><p>发送请求(指定请求方法),获取解析生成soup文档</p>
+</li>
+<li><p>基于soup文档中的元素执行定位(待爬取所在html标签元素)</p>
+</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2021/07/20/%E7%AC%AC%E5%85%AB%E5%A4%A9/" data-id="ckrcs0qj200097q5b017dcp0x" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/" rel="tag">Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%88%AC%E8%99%AB/" rel="tag">爬虫</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-第七天" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2021/07/19/%E7%AC%AC%E4%B8%83%E5%A4%A9/" class="article-date">
@@ -374,7 +491,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/07/19/%E7%AC%AC%E4%B8%83%E5%A4%A9/" data-id="ckrbbp3h70002g45b4z2hhuf3" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/07/19/%E7%AC%AC%E4%B8%83%E5%A4%A9/" data-id="ckrcs0qiv00027q5b7t0gdn2s" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/http/" rel="tag">http</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%88%AC%E8%99%AB/" rel="tag">爬虫</a></li></ul>
@@ -476,7 +593,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/07/17/%E7%AC%AC%E5%85%AD%E5%A4%A9/" data-id="ckrbbp3hf000ag45b83o60wcg" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/07/17/%E7%AC%AC%E5%85%AD%E5%A4%A9/" data-id="ckrcs0qj3000a7q5bcav8hqj2" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag">数据库</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%88%AC%E8%99%AB/" rel="tag">爬虫</a></li></ul>
@@ -661,7 +778,7 @@ prop.load(DBUtil.class.getClassLoader().getResourceAsStream(&quot;dbconfig.prope
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/07/16/%E7%AC%AC%E4%BA%94%E5%A4%A9/" data-id="ckrbbp3hd0006g45b4yyhh74z" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/07/16/%E7%AC%AC%E4%BA%94%E5%A4%A9/" data-id="ckrcs0qj100067q5b1aqzczac" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag">数据库</a></li></ul>
@@ -801,7 +918,7 @@ prop.load(DBUtil.class.getClassLoader().getResourceAsStream(&quot;dbconfig.prope
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/07/15/%E7%AC%AC%E5%9B%9B%E5%A4%A9/" data-id="ckrbbp3he0009g45b1ub3f3b2" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/07/15/%E7%AC%AC%E5%9B%9B%E5%A4%A9/" data-id="ckrcs0qj5000c7q5b31lq6iij" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%AE%89%E8%A3%85/" rel="tag">安装</a></li></ul>
@@ -983,7 +1100,7 @@ prop.load(DBUtil.class.getClassLoader().getResourceAsStream(&quot;dbconfig.prope
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/07/14/%E7%AC%AC%E4%B8%89%E5%A4%A9/" data-id="ckrbbp3ha0004g45b9jtocg0b" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/07/14/%E7%AC%AC%E4%B8%89%E5%A4%A9/" data-id="ckrcs0qiz00047q5bfg2t6gzq" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%AE%89%E8%A3%85/" rel="tag">安装</a></li></ul>
@@ -1120,7 +1237,7 @@ prop.load(DBUtil.class.getClassLoader().getResourceAsStream(&quot;dbconfig.prope
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/07/13/%E7%AC%AC%E4%BA%8C%E5%A4%A9/" data-id="ckrbbp3hc0005g45bdk4j9bpo" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/07/13/%E7%AC%AC%E4%BA%8C%E5%A4%A9/" data-id="ckrcs0qj000057q5b3mo880qj" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/" rel="tag">浏览器</a></li></ul>
@@ -1189,7 +1306,7 @@ prop.load(DBUtil.class.getClassLoader().getResourceAsStream(&quot;dbconfig.prope
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/07/12/%E7%AC%AC%E4%B8%80%E5%A4%A9/" data-id="ckrbbp3h30001g45b31602oo6" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/07/12/%E7%AC%AC%E4%B8%80%E5%A4%A9/" data-id="ckrcs0qis00017q5becx6180l" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%A1%B9%E7%9B%AE%E5%88%86%E6%9E%90/" rel="tag">项目分析</a></li></ul>
@@ -1214,7 +1331,7 @@ prop.load(DBUtil.class.getClassLoader().getResourceAsStream(&quot;dbconfig.prope
   <div class="widget-wrap">
     <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/http/" rel="tag">http</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AE%89%E8%A3%85/" rel="tag">安装</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag">数据库</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/" rel="tag">浏览器</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%88%AC%E8%99%AB/" rel="tag">爬虫</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%A1%B9%E7%9B%AE%E5%88%86%E6%9E%90/" rel="tag">项目分析</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/" rel="tag">Java</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/http/" rel="tag">http</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AE%89%E8%A3%85/" rel="tag">安装</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag">数据库</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/" rel="tag">浏览器</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%88%AC%E8%99%AB/" rel="tag">爬虫</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%A1%B9%E7%9B%AE%E5%88%86%E6%9E%90/" rel="tag">项目分析</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -1224,7 +1341,7 @@ prop.load(DBUtil.class.getClassLoader().getResourceAsStream(&quot;dbconfig.prope
   <div class="widget-wrap">
     <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/http/" style="font-size: 10px;">http</a> <a href="/tags/%E5%AE%89%E8%A3%85/" style="font-size: 20px;">安装</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" style="font-size: 20px;">数据库</a> <a href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/" style="font-size: 10px;">浏览器</a> <a href="/tags/%E7%88%AC%E8%99%AB/" style="font-size: 20px;">爬虫</a> <a href="/tags/%E9%A1%B9%E7%9B%AE%E5%88%86%E6%9E%90/" style="font-size: 10px;">项目分析</a>
+      <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/http/" style="font-size: 10px;">http</a> <a href="/tags/%E5%AE%89%E8%A3%85/" style="font-size: 15px;">安装</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" style="font-size: 15px;">数据库</a> <a href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/" style="font-size: 10px;">浏览器</a> <a href="/tags/%E7%88%AC%E8%99%AB/" style="font-size: 20px;">爬虫</a> <a href="/tags/%E9%A1%B9%E7%9B%AE%E5%88%86%E6%9E%90/" style="font-size: 10px;">项目分析</a>
     </div>
   </div>
 
@@ -1233,7 +1350,7 @@ prop.load(DBUtil.class.getClassLoader().getResourceAsStream(&quot;dbconfig.prope
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">七月 2021</a><span class="archive-list-count">7</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">七月 2021</a><span class="archive-list-count">8</span></li></ul>
     </div>
   </div>
 
@@ -1244,6 +1361,10 @@ prop.load(DBUtil.class.getClassLoader().getResourceAsStream(&quot;dbconfig.prope
     <h3 class="widget-title">最新文章</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2021/07/20/%E7%AC%AC%E5%85%AB%E5%A4%A9/">第八篇博客</a>
+          </li>
         
           <li>
             <a href="/2021/07/19/%E7%AC%AC%E4%B8%83%E5%A4%A9/">第七篇博客</a>
@@ -1259,10 +1380,6 @@ prop.load(DBUtil.class.getClassLoader().getResourceAsStream(&quot;dbconfig.prope
         
           <li>
             <a href="/2021/07/15/%E7%AC%AC%E5%9B%9B%E5%A4%A9/">第四篇博客</a>
-          </li>
-        
-          <li>
-            <a href="/2021/07/14/%E7%AC%AC%E4%B8%89%E5%A4%A9/">第三篇博客</a>
           </li>
         
       </ul>
