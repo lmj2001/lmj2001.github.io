@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>Hadoop | 愿你生命的每一天都充满美好</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="准备:提供预安装Vagrantfile 个性化  所有节点数组中每一个机器节点描述的 ip &amp; bridge  jdk 安装文件的位置（好几个。。。）  过程有错: 宿主机的资源不够  找到一个可用的授时服务器 (?) Hadoop 全分布集群安装 预配置、准备工作   确认运行模式 - 全分布集群模式  确定运行用户 - vagrant  网络配置 - IPAddress  主机名配置">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hadoop">
+<meta property="og:url" content="http://example.com/2021/07/29/Hadoop/index.html">
+<meta property="og:site_name" content="愿你生命的每一天都充满美好">
+<meta property="og:description" content="准备:提供预安装Vagrantfile 个性化  所有节点数组中每一个机器节点描述的 ip &amp; bridge  jdk 安装文件的位置（好几个。。。）  过程有错: 宿主机的资源不够  找到一个可用的授时服务器 (?) Hadoop 全分布集群安装 预配置、准备工作   确认运行模式 - 全分布集群模式  确定运行用户 - vagrant  网络配置 - IPAddress  主机名配置">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-07-29T02:14:10.000Z">
+<meta property="article:modified_time" content="2021-07-29T07:14:43.161Z">
+<meta property="article:author" content="MainJay">
+<meta property="article:tag" content="虚拟机">
+<meta property="article:tag" content="Hadoop">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="愿你生命的每一天都充满美好" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/picture.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<a target="_blank" rel="noopener" href="https://github.com/zhchnchn"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://camo.githubusercontent.com/82b228a3648bf44fc1163ef44c62fcc60081495e/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f7265645f6161303030302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_left_red_aa0000.png"></a>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">愿你生命的每一天都充满美好</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Hadoop" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2021/07/29/Hadoop/" class="article-date">
+  <time datetime="2021-07-29T02:14:10.000Z" itemprop="datePublished">2021-07-29</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Hadoop
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="准备"><a href="#准备" class="headerlink" title="准备:"></a>准备:</h2><h3 id="提供预安装"><a href="#提供预安装" class="headerlink" title="提供预安装"></a>提供预安装</h3><p>Vagrantfile 个性化</p>
+<ul>
+<li>所有节点数组中每一个机器节点描述的 ip &amp; bridge</li>
+<li> jdk 安装文件的位置（好几个。。。）</li>
+</ul>
+<h3 id="过程有错"><a href="#过程有错" class="headerlink" title="过程有错:"></a>过程有错:</h3><ol>
+<li><p>宿主机的资源不够</p>
+</li>
+<li><p>找到一个可用的授时服务器 (?)</p>
+<h2 id="Hadoop-全分布集群安装"><a href="#Hadoop-全分布集群安装" class="headerlink" title="Hadoop 全分布集群安装"></a>Hadoop 全分布集群安装</h2></li>
+<li><p>预配置、准备工作</p>
+</li>
+<li><p> 确认运行模式 - 全分布集群模式</p>
+</li>
+<li><p>确定运行用户 - vagrant</p>
+</li>
+<li><p>网络配置 - IPAddress</p>
+</li>
+<li><p>主机名配置 - hostname &amp; hosts</p>
+</li>
+<li><p>支撑软件 - jdk -&gt; usr/java + .profile &lt; source &gt;</p>
+</li>
+<li><p>ssh 免密登录</p>
+</li>
+<li><p>关闭防火墙 – debian没有预置 firewall</p>
+</li>
+</ol>
+<h3 id="软件下载"><a href="#软件下载" class="headerlink" title="软件下载"></a>软件下载</h3><ol>
+<li>ssh 免密 </li>
+</ol>
+<ul>
+<li>使用 vagrant 用户在每台机机器逐一执行 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ssh localhost </span><br><span class="line">ssh master</span><br><span class="line">sh slave01</span><br><span class="line">ssh slave02</span><br></pre></td></tr></table></figure>
+进入对应机器, 使用 exit 命令退出<br>注释、删除所有节点 /etc/hosts 中 <code>127.0.0.1  master master.hadoop </code></li>
+<li>可能需要删除 slave01 &amp; slave02 节点上.ssh/know_hosts 文件</li>
+<li> 在每台机机器, 生产ssh 密钥,并将公钥追加到其他机器上<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> master</span> </span><br><span class="line">ssh-keygen -t rsa </span><br><span class="line">scp /home/vagrant/.ssh/id_rsa.pub vagrant@slave01:~/</span><br><span class="line">scp /home/vagrant/.ssh/id_rsa.pub vagrant@slave02:~/</span><br><span class="line">cat .ssh/id_rsa.pub &gt;&gt; .ssh/authorized_keys</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> slave01 将传过来的 master|vagrant 的公钥追加到 ~/.ssh/authorized_keys</span></span><br><span class="line">cd </span><br><span class="line">cat id_rsa.pub &gt;&gt; ~/.ssh/authorized_keys</span><br><span class="line"><span class="meta">#</span><span class="bash"> 删传过来的公钥</span> </span><br><span class="line">cd </span><br><span class="line">rm id_rsa.pub</span><br><span class="line"><span class="meta">#</span><span class="bash"> 确认权限</span> </span><br><span class="line">authorized_keys</span><br><span class="line">ls -l .ssh/authorized_keys</span><br><span class="line"><span class="meta">#</span><span class="bash"> 验证:</span> </span><br><span class="line"><span class="meta">#</span><span class="bash"> master:</span></span><br><span class="line">ssh slave01 </span><br><span class="line">slave02 </span><br></pre></td></tr></table></figure></li>
+<li>cluster install <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> master 上 vagrant 用户完成</span> </span><br><span class="line"><span class="meta">#</span><span class="bash"> 下载 / 上传 / 解压</span> </span><br><span class="line">cd</span><br><span class="line">cp /share/hadoop/software/hadoop-3.2.2.tar.gz.  .</span><br><span class="line">tar -xzvf hadoop-3.2.2.tar.gz</span><br><span class="line">mv hadoop-3.2.2 hadoop3      </span><br><span class="line">rm hadoop-3.2.2.tar.gz</span><br></pre></td></tr></table></figure></li>
+<li>配置系统 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># for Java</span></span><br><span class="line"><span class="built_in">export</span> JAVA_HOME=/usr/java/jdk1.8.0_291</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$JAVA_HOME</span>/bin:<span class="variable">$PATH</span></span><br><span class="line"><span class="comment"># for hadoop</span></span><br><span class="line"><span class="built_in">export</span> HADOOP_HOME=/home/vagrant/hadoop3</span><br><span class="line"><span class="built_in">export</span> YARN_HOME=<span class="variable">$HOME</span>/hadoop3</span><br><span class="line"><span class="built_in">export</span> HADOOP_CONF_DIR=<span class="variable">$HADOOP_HOME</span>/etc/hadoop</span><br><span class="line"><span class="built_in">export</span> HDFS_CONF_DIR=<span class="variable">$HADOOP_HOME</span>/etc/hadoop</span><br><span class="line"><span class="comment"># YARN_CONF_DIR 是降级的环境变量, 应该用 HADOOP_CONF_DIR 替换</span></span><br><span class="line"><span class="comment"># export YARN_CONF_DIR=$YARN_HOME/etc/hadoop</span></span><br><span class="line"><span class="built_in">export</span> HADOOP_COMMON_LIB_NATIVE_DIR=<span class="variable">$HADOOP_HOME</span>/lib/native</span><br><span class="line"><span class="built_in">export</span> HADOOP_OPTS=<span class="string">&quot;-Djava.library.path=<span class="variable">$HADOOP_HOME</span>/lib/native:<span class="variable">$HADOOP_COMMON_LIB_NATIVE_DIR</span>&quot;</span></span><br><span class="line"><span class="built_in">export</span> PATH=.:<span class="variable">$JAVA_HOME</span>/lib:<span class="variable">$HADOOP_HOME</span>/bin:<span class="variable">$HADOOP_HOME</span>/sbin:<span class="variable">$PATH</span></span><br></pre></td></tr></table></figure></li>
+<li>配自身</li>
+</ul>
+<ol>
+<li><p>hadoop-env.sh</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 设置 JAVA_HOME 环境变量, 可以使用 Linux 的 ~/.bash_profile 设置的环境变量, 推荐使用此处配置</span></span><br><span class="line"><span class="built_in">export</span> JAVA_HOME=/usr/java/jdk1.8.0_291</span><br></pre></td></tr></table></figure></li>
+<li><p>yarn-env.sh</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 设置 JAVA_HOME 环境变量, 可以使用 Linux 的 ~/.bash_profile 设置的环境变量, 推荐使用此处配置</span></span><br><span class="line"><span class="built_in">export</span> JAVA_HOME=/usr/java/jdk1.8.0_291</span><br></pre></td></tr></table></figure></li>
+<li><p>全部配置: core-site.xml 加入: </p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">name</span>&gt;</span>fs.defaultFS<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">value</span>&gt;</span>hdfs://master:9000<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">name</span>&gt;</span>hadoop.tmp.dir<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">value</span>&gt;</span>/home/vagrant/hadoopdata<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+<li><p>hdfs-site.xml 加入: </p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"> <span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.replication<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">value</span>&gt;</span>2<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">	<span class="comment">&lt;!-- 取消“访问控制检查”, 保证WebUI模式可以进行文件上传 --&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.permissions<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">value</span>&gt;</span>false<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">property</span>&gt;</span> </span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span> </span><br></pre></td></tr></table></figure></li>
+<li><p>mapred-site.xml 加入: </p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>mapreduce.framework.name<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>yarn<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>mapreduce.jobhistory.address<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>master:10020<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">name</span>&gt;</span>mapreduce.jobhistory.webapp.address<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">value</span>&gt;</span>master:19888<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">name</span>&gt;</span>mapreduce.jobhistory.webapp.https.address<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">value</span>&gt;</span>master:19890<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">name</span>&gt;</span>mapreduce.jobhistory.admin.address<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">value</span>&gt;</span>master:10033<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">name</span>&gt;</span>mapreduce.application.classpath<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>/home/vagrant/hadoop3/etc/hadoop:/home/vagrant/hadoop3/share/hadoop/common/lib/*:/home/vagrant/hadoop3/share/hadoop/common/*:/home/vagrant/hadoop3/share/hadoop/hdfs:/home/vagrant/hadoop3/share/hadoop/hdfs/lib/*:/home/vagrant/hadoop3/share/hadoop/hdfs/*:/home/vagrant/hadoop3/share/hadoop/mapreduce/lib/*:/home/vagrant/hadoop3/share/hadoop/mapreduce/*:/home/vagrant/hadoop3/share/hadoop/yarn:/home/vagrant/hadoop3/share/hadoop/yarn/lib/*:/home/vagrant/hadoop3/share/hadoop/yarn/*<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span>`</span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+<ul>
+<li>将上述的所有文件(安装\配置) 复制到 slave01 | slave02 对应目录<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">``<span class="built_in">cd</span> </span><br><span class="line">``scp .profile vagrant@slave01:~/</span><br><span class="line">``scp .profile vagrant@slave02:~/</span><br><span class="line">  <span class="comment">#``建议 立刻 source 一下 </span></span><br><span class="line">``scp -r hadoop3/ vagrant@slave01:~/</span><br><span class="line">``scp -r hadoop3/ vagrant@slave02:~/</span><br></pre></td></tr></table></figure>
+<h3 id="cluster-start"><a href="#cluster-start" class="headerlink" title="cluster start"></a>cluster start</h3></li>
+</ul>
+<p>1.前提:<br>source 每台机器的 vagrant 主目录下的 .profile<br>在每台机机器的 vagrant 主目录下 创建 hadoopdata<br>2.启动 </p>
+<ul>
+<li>格式化 hdfs == master 上<br> <code>hdfs namenode -format </code></li>
+<li>启动 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#``0 - start-all.sh 不推荐 </span></span><br><span class="line"><span class="comment"># ``1. 分别启动 </span></span><br><span class="line">``start-dfs.sh</span><br><span class="line">``start-yarn.sh </span><br><span class="line"><span class="comment">#``验证:</span></span><br><span class="line">``jps </span><br><span class="line"><span class="comment"># ``master : Namenode\SecondaryNamenode\ResourceManager </span></span><br><span class="line"><span class="comment"># ``slave01&amp;slave02: Datanode\NodeManager</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2021/07/29/Hadoop/" data-id="ckrol19ns0002it5b3mf893l9" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hadoop/" rel="tag">Hadoop</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%99%9A%E6%8B%9F%E6%9C%BA/" rel="tag">虚拟机</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2021/07/28/%E8%99%9A%E6%8B%9F%E6%9C%BA2/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">虚拟机2</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker/" rel="tag">Docker</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hadoop/" rel="tag">Hadoop</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/" rel="tag">Java</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/http/" rel="tag">http</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AE%89%E8%A3%85/" rel="tag">安装</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag">数据库</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%96%87%E4%BB%B6/" rel="tag">文件</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/" rel="tag">浏览器</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%88%AC%E8%99%AB/" rel="tag">爬虫</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%99%9A%E6%8B%9F%E6%9C%BA/" rel="tag">虚拟机</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%A1%B9%E7%9B%AE%E5%88%86%E6%9E%90/" rel="tag">项目分析</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Docker/" style="font-size: 10px;">Docker</a> <a href="/tags/Hadoop/" style="font-size: 10px;">Hadoop</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Linux/" style="font-size: 15px;">Linux</a> <a href="/tags/http/" style="font-size: 10px;">http</a> <a href="/tags/%E5%AE%89%E8%A3%85/" style="font-size: 15px;">安装</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" style="font-size: 15px;">数据库</a> <a href="/tags/%E6%96%87%E4%BB%B6/" style="font-size: 10px;">文件</a> <a href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/" style="font-size: 15px;">浏览器</a> <a href="/tags/%E7%88%AC%E8%99%AB/" style="font-size: 20px;">爬虫</a> <a href="/tags/%E8%99%9A%E6%8B%9F%E6%9C%BA/" style="font-size: 15px;">虚拟机</a> <a href="/tags/%E9%A1%B9%E7%9B%AE%E5%88%86%E6%9E%90/" style="font-size: 10px;">项目分析</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">七月 2021</a><span class="archive-list-count">15</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2021/07/29/Hadoop/">Hadoop</a>
+          </li>
+        
+          <li>
+            <a href="/2021/07/28/%E8%99%9A%E6%8B%9F%E6%9C%BA2/">虚拟机2</a>
+          </li>
+        
+          <li>
+            <a href="/2021/07/27/Docker-in-Linux/">Docker in Linux</a>
+          </li>
+        
+          <li>
+            <a href="/2021/07/26/%E8%99%9A%E6%8B%9F%E6%9C%BA/">虚拟机</a>
+          </li>
+        
+          <li>
+            <a href="/2021/07/24/%E7%AC%AC%E5%8D%81%E4%B8%80%E5%A4%A9/">第十一天</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2021 MainJay<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>
