@@ -69,6 +69,114 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-hdfs" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2021/07/31/hdfs/" class="article-date">
+  <time datetime="2021-07-31T06:47:55.000Z" itemprop="datePublished">2021-07-31</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/07/31/hdfs/">hdfs</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="Java-amp-Python-HDFS"><a href="#Java-amp-Python-HDFS" class="headerlink" title="Java &amp; Python HDFS"></a>Java &amp; Python HDFS</h2><h3 id="讨论"><a href="#讨论" class="headerlink" title="讨论"></a>讨论</h3><h4 id="运行位置"><a href="#运行位置" class="headerlink" title="运行位置"></a>运行位置</h4><p>Local: </p>
+<ul>
+<li><p>Linux : Hadoop &amp; IDEA </p>
+</li>
+<li><p>Linux Server : CLI Hadoop   </p>
+</li>
+<li><p>Remote: WebUI —— <a target="_blank" rel="noopener" href="http://master:9870/">http://master:9870</a>.   hdfs://master:9000/hdfspath</p>
+</li>
+<li><p>OS: Windows + IDEA </p>
+</li>
+</ul>
+<p>jar:</p>
+<ul>
+<li><p>local: hadoop jar xx.jar</p>
+</li>
+<li><p>remote: java jar xx.jar </p>
+</li>
+<li><p>IDEA(remote, run|debug</p>
+</li>
+</ul>
+<p>IDE : IDEA </p>
+<h2 id="remote-idea-开发-amp-运行"><a href="#remote-idea-开发-amp-运行" class="headerlink" title="remote idea 开发&amp;运行"></a>remote idea 开发&amp;运行</h2><ul>
+<li><p>byURL : 下载 hdfs 上资源</p>
+</li>
+<li><p>借助 HDFS API 实现 资源操作</p>
+</li>
+<li><p>指明操作用户,设置 client os 的系统环境变量</p>
+</li>
+<li><p>在代码中设置 hdfs 操作用户 HADOOP_USER_NAME<br>  获取 hdfs 的句柄<br>   <a target="_blank" rel="noopener" href="https://wiki.apache.org/hadoop/WindowsProblems">https://wiki.apache.org/hadoop/WindowsProblems</a><br>   <a target="_blank" rel="noopener" href="https://cwiki.apache.org/confluence/display/HADOOP2/WindowsProblems">https://cwiki.apache.org/confluence/display/HADOOP2/WindowsProblems</a><br>   <a target="_blank" rel="noopener" href="https://github.com/steveloughran/winutils">https://github.com/steveloughran/winutils</a><br>  解压,对应版本,放置在 c:/dev/hadoop</p>
+</li>
+<li><p>MR(Java) =&gt; Hadoop run<br><a target="_blank" rel="noopener" href="http://hadoop.apache.org/docs/r1.0.4/cn/mapred_tutorial.html">http://hadoop.apache.org/docs/r1.0.4/cn/mapred_tutorial.html</a></p>
+</li>
+</ul>
+<h3 id="准备数据"><a href="#准备数据" class="headerlink" title="准备数据"></a>准备数据</h3><ul>
+<li><p>upload hdfs  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hdfs dfs -mkdir -p /input/mr/wc01</span><br><span class="line">hdfs dfs -put /share/mr/data/* /input/mr/wc01</span><br><span class="line">mr -- java </span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="编写程序"><a href="#编写程序" class="headerlink" title="编写程序"></a>编写程序</h3><ol>
+<li><p>new maven project<br> 添加依赖 == hadoop-client</p>
+</li>
+<li><p>override map</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">WCGenderMapper</span> <span class="keyword">extends</span> <span class="title">Mapper</span>&lt;<span class="title">LongWritable</span>, <span class="title">Text</span>, <span class="title">Text</span>, <span class="title">IntWritable</span>&gt;</span></span><br><span class="line"><span class="class">//<span class="keyword">extends</span> <span class="title">org</span>.<span class="title">apache</span>.<span class="title">hadoop</span>.<span class="title">mapreduce</span>.<span class="title">Mapper</span></span></span><br></pre></td></tr></table></figure>
+
+<p> &lt;LongWritable, Text, Text, IntWritable&gt;分别对应 mapper 输入的 key,value 和 mapper 输出的 key,value </p>
+<p> 在 Hadoop 中的可序列化的数据类型 </p>
+</li>
+<li><p>override reduce</p>
+<pre><code> 获取每一行, 拆分, 生成 mapper 输出的 midMap&lt;行中每个单词, 1&gt;
+</code></pre>
+   <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">WCGenderReducer</span> <span class="keyword">extends</span> <span class="title">Reducer</span>&lt;<span class="title">Text</span>, <span class="title">IntWritable</span>, <span class="title">Text</span>, <span class="title">LongWritable</span>&gt;  </span></span><br><span class="line"><span class="class">//<span class="title">exitends</span> <span class="title">org</span>.<span class="title">apache</span>.<span class="title">hadoop</span>.<span class="title">mapreduce</span>.<span class="title">Reduce</span></span></span><br></pre></td></tr></table></figure>
+
+<p>   &lt;Text, IntWritable, Text, LongWritable&gt; 分别对应 mapper 的输出的 key,value 和 最终的输出结果的 key,value </p>
+<p>   在 Hadoop 中的可序列化的数据类型 </p>
+</li>
+<li><p>遍历输出<br>  遍历 values, 统计, 写入最终 destMap&lt;每个单词, 单词出现次数&gt; 中<br>  maven-&gt;项目名称-&gt;lifecycle-&gt;package</p>
+</li>
+<li><p>上传 jar, 在 hadoop 运行 jar </p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hadoop jar mymr.jar /input/mr/wc01 /output/wc01</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="MapReduce"><a href="#MapReduce" class="headerlink" title="MapReduce"></a>MapReduce</h2><h3 id="运行方式"><a href="#运行方式" class="headerlink" title="运行方式"></a>运行方式</h3><h4 id="jar"><a href="#jar" class="headerlink" title="jar"></a>jar</h4><p>​      upload </p>
+<p>​       remote hadoop cluster package</p>
+<h4 id="IDEA-本地执行"><a href="#IDEA-本地执行" class="headerlink" title="IDEA 本地执行"></a>IDEA 本地执行</h4><ol>
+<li>input/output src</li>
+<li>在当前项目中,修改Hadoop源代码NativeIO</li>
+</ol>
+<p>​      建议:运行前重启,或者重新修改pom文件并且刷新</p>
+<ol start="3">
+<li>设置本地运行的启动参数</li>
+<li>修改</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2021/07/31/hdfs/" data-id="ckscnkdpl0002sy5b6lur1cvz" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hdfs/" rel="tag">hdfs</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-Hadoop" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2021/07/29/Hadoop/" class="article-date">
@@ -91,7 +199,23 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="准备"><a href="#准备" class="headerlink" title="准备:"></a>准备:</h2><h3 id="提供预安装"><a href="#提供预安装" class="headerlink" title="提供预安装"></a>提供预安装</h3><p>Vagrantfile 个性化</p>
+        <h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><ol>
+<li><p> 多个存储单元和存储器</p>
+</li>
+<li><p>有效地存储和处理大数据</p>
+</li>
+<li><p>存储数据</p>
+<ul>
+<li>HDFS对数据进行拷贝并将其存储在多个系统中</li>
+<li>当一个节点被创建时,会将其存储在不同的数据节点上</li>
+</ul>
+</li>
+<li><p>处理数据MapReduce</p>
+</li>
+<li><p>组成:资源管理器、节点管理器、应用管理器和容器组成</p>
+</li>
+</ol>
+<h2 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h2><h3 id="提供预安装"><a href="#提供预安装" class="headerlink" title="提供预安装"></a>提供预安装</h3><p>Vagrantfile 个性化</p>
 <ul>
 <li>所有节点数组中每一个机器节点描述的 ip &amp; bridge</li>
 <li> jdk 安装文件的位置（好几个。。。）</li>
@@ -151,11 +275,18 @@
 <li>格式化 hdfs == master 上<br> <code>hdfs namenode -format </code></li>
 <li>启动 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#``0 - start-all.sh 不推荐 </span></span><br><span class="line"><span class="comment"># ``1. 分别启动 </span></span><br><span class="line">``start-dfs.sh</span><br><span class="line">``start-yarn.sh </span><br><span class="line"><span class="comment">#``验证:</span></span><br><span class="line">``jps </span><br><span class="line"><span class="comment"># ``master : Namenode\SecondaryNamenode\ResourceManager </span></span><br><span class="line"><span class="comment"># ``slave01&amp;slave02: Datanode\NodeManager</span></span><br></pre></td></tr></table></figure></li>
 </ul>
+<p><a target="_blank" rel="noopener" href="https://hadoop.apache.org/docs/r1.0.4/cn/">学习链接</a></p>
+<h2 id="Hadoop常用命令"><a href="#Hadoop常用命令" class="headerlink" title="Hadoop常用命令"></a>Hadoop常用命令</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br></pre></td><td class="code"><pre><span class="line">1. 命令分类</span><br><span class="line">    第一部分：运维命令</span><br><span class="line">        start-dfs.sh   启动namenode，datanode，启动文件系统</span><br><span class="line">        stop-dfs.sh   关闭文件系统</span><br><span class="line">        start-yarn.sh  启动resourcemanager,nodemanager</span><br><span class="line">        stop-yarn.sh  关闭resourcemanager,nodemanager</span><br><span class="line">        start-all.sh    启动hdfs，yarn</span><br><span class="line">        stop-all.sh    关闭hdfs，yarn</span><br><span class="line">        hdfs-daemon.sh start datanode  单独启动datanode</span><br><span class="line">        start-balancer.sh -t 10% 启动负载均衡，尽量不要在namenode节点使用</span><br><span class="line">        hdfs namenode -format  格式化文件系统</span><br><span class="line">        hdfs namenode -upgrade  分发新的hdfs版本之后，namenode应以upgrade选项启动</span><br><span class="line">        hdfs namenode -rollback  将namenode回滚到前一版本，这个选项要在停止集群，分发老的hdfs版本之后执行</span><br><span class="line">        hdfs namenode -finalize  finalize会删除文件系统的前一状态。最近的升级会被持久化，rollback选项将再不可用，升级终结操作之后，它会停掉namenode，分发老的hdfs版本后使用</span><br><span class="line">        hdfs namenode -importCheckpoint 从检查点目录装载镜像并保存到当前检查点目录，检查点目录由fs.checkpoint.dir指定</span><br><span class="line"></span><br><span class="line">    第二部分：hdfs文件系统命令</span><br><span class="line">        第一类：文件路径增删改查系列：</span><br><span class="line">            hdfs dfs -mkdir dir  创建文件夹</span><br><span class="line">            hdfs dfs -rmr dir  删除文件夹</span><br><span class="line">                hdfs dfs -rm -r 删除文件夹</span><br><span class="line">            hdfs dfs -ls  查看目录文件信息</span><br><span class="line">            hdfs dfs -lsr  递归查看文件目录信息</span><br><span class="line">                hdfs dfs -ls -R 递归查看文件目录</span><br><span class="line">            hdfs dfs -<span class="built_in">stat</span> path 返回指定路径的信息</span><br><span class="line">        第二类：空间大小查看系列命令：</span><br><span class="line">            hdfs dfs -du -h dir 按照适合阅读的形式人性化显示文件大小</span><br><span class="line">            hdfs dfs -dus uri  递归显示目标文件的大小</span><br><span class="line">            hdfs dfs -du path/file显示目标文件file的大小</span><br><span class="line"><span class="comment"># 第三类:权限管理类：</span></span><br><span class="line">            hdfs dfs -chgrp  group path  改变文件所属组</span><br><span class="line">            hdfs dfs -chgrp -R /dir  递归更改dir目录的所属组</span><br><span class="line">            hdfs dfs -chmod [-R] 权限 -path  改变文件的权限</span><br><span class="line">            hdfs dfs -chown owner[-group] /dir 改变文件的所有者</span><br><span class="line">            hdfs dfs -chown -R  owner[-group] /dir  递归更改dir目录的所属用户</span><br><span class="line">        第四类：文件操作（上传下载复制）系列：</span><br><span class="line">            hdfs dfs -touchz a.txt 创建长度为0的空文件a.txt</span><br><span class="line">            hdfs dfs -rm file   删除文件file</span><br><span class="line">            hdfs dfs -put file dir  向dir文件上传file文件</span><br><span class="line">            hdfs dfs -put filea dir/fileb 向dir上传文件filea并且把filea改名为fileb</span><br><span class="line">            hdfs dfs -get file dir  下载file到本地文件夹</span><br><span class="line">            hdfs dfs -getmerge hdfs://Master:9000/data/SogouResult.txt CombinedResult  把hdfs里面的多个文件合并成一个文件，合并后文件位于本地系统</span><br><span class="line">            hdfs dfs -cat file   查看文件file</span><br><span class="line">            hdfs fs -text /dir/a.txt  如果文件是文本格式，相当于cat，如果文件是压缩格式，则会先解压，再查看</span><br><span class="line">            hdfs fs -tail /dir/a.txt查看dir目录下面a.txt文件的最后1000字节</span><br><span class="line">            hdfs dfs -copyFromLocal localsrc path 从本地复制文件</span><br><span class="line">            hdfs dfs -copyToLocal /hdfs/a.txt /<span class="built_in">local</span>/a.txt  从hdfs拷贝到本地</span><br><span class="line">            hdfs dfs -copyFromLocal /dir/<span class="built_in">source</span> /dir/target  把文件从原路径拷贝到目标路径</span><br><span class="line">            hdfs dfs -mv /path/a.txt /path/b.txt 把文件从a目录移动到b目录，可用于回收站恢复文件</span><br><span class="line">        第五类：判断系列：</span><br><span class="line">            hdfs fs -<span class="built_in">test</span> -e /dir/a.txt 判断文件是否存在，正0负1</span><br><span class="line">            hdfs fs -<span class="built_in">test</span> -d /dir  判断dir是否为目录，正0负1</span><br><span class="line">            hdfs fs -<span class="built_in">test</span> -z /dir/a.txt  判断文件是否为空，正0负1</span><br><span class="line">        第六类：系统功能管理类：</span><br><span class="line">            hdfs dfs -expunge 清空回收站</span><br><span class="line">            hdfs dfsadmin -safemode enter 进入安全模式</span><br><span class="line">            hdfs dfsadmin -sfaemode leave 离开安全模式</span><br><span class="line">            hdfs dfsadmin -decommission datanodename 关闭某个datanode节点</span><br><span class="line">            hdfs dfsadmin -finalizeUpgrade 终结升级操作</span><br><span class="line">            hdfs dfsadmin -upgradeProcess status 查看升级操作状态</span><br><span class="line">            hdfs version 查看hdfs版本</span><br><span class="line">            hdfs daemonlog -getlevel &lt;host:port&gt; &lt;name&gt;  打印运行在&lt;host:port&gt;的守护进程的日志级别</span><br><span class="line">            hdfs daemonlog -setlevel &lt;host:port&gt; &lt;name&gt; &lt;level&gt;  设置运行在&lt;host:port&gt;的守护进程的日志级别</span><br><span class="line">            hdfs dfs -setrep -w 副本数 -R path 设置文件的副本数</span><br><span class="line"></span><br><span class="line">    第三部分：hdfs系统检查工具fsck</span><br><span class="line">        hdfs fsck &lt;path&gt; -move    移动受损文件到/lost+found</span><br><span class="line">        hdfs fsck &lt;path&gt; -delete   删除受损文件。</span><br><span class="line">        hdfs fsck &lt;path&gt; -openforwrite   打印出写打开的文件。</span><br><span class="line">        hdfs fsck &lt;path&gt; -files     打印出正被检查的文件。</span><br><span class="line">        hdfs fsck &lt;path&gt; -blocks     打印出块信息报告。</span><br><span class="line">        hdfs fsck &lt;path&gt; -locations     打印出每个块的位置信息。</span><br><span class="line">        hdfs fsck &lt;path&gt; -racks    打印出data-node的网络拓扑结构。</span><br><span class="line"></span><br><span class="line">    第四部分：mapreduce命令</span><br><span class="line">        hdfs jar file.jar 执行jar包程序</span><br><span class="line">        hdfs job -<span class="built_in">kill</span> job_201005310937_0053  杀死正在执行的jar包程序</span><br><span class="line">        hdfs job -submit &lt;job-file&gt;  提交作业</span><br><span class="line">        hdfs job -status &lt;job-id&gt;   打印map和reduce完成百分比和所有计数器。</span><br><span class="line">        hdfs job -counter &lt;job-id&gt; &lt;group-name&gt; &lt;counter-name&gt;  打印计数器的值。</span><br><span class="line">        hdfs job -<span class="built_in">kill</span> &lt;job-id&gt;  杀死指定作业。</span><br><span class="line">        hdfs job -events &lt;job-id&gt; &lt;from-event-<span class="comment">#&gt; &lt;#-of-events&gt; 打印给定范围内jobtracker接收到的事件细节。</span></span><br><span class="line">        hdfs job -<span class="built_in">history</span> [all] &lt;jobOutputDir&gt;     </span><br><span class="line">        hdfs job -<span class="built_in">history</span> &lt;jobOutputDir&gt; 打印作业的细节、失败及被杀死原因的细节。更多的关于一个作业的细节比如成功的任务，做过的任务尝试等信息可以通过指定[all]选项查看。</span><br><span class="line">        hdfs job -list [all]  显示所有作业。-list只显示将要完成的作业。</span><br><span class="line">        hdfs job -<span class="built_in">kill</span> -task &lt;task-id&gt;   杀死任务。被杀死的任务不会不利于失败尝试。</span><br><span class="line">        hdfs job -fail -task &lt;task-id&gt;   使任务失败。被失败的任务会对失败尝试不利。</span><br><span class="line"></span><br><span class="line">    第五部分：运行pipies作业</span><br><span class="line">        hdfs pipes -conf &lt;path&gt; 作业的配置</span><br><span class="line">        hdfs pipes -jobconf &lt;key=value&gt;, &lt;key=value&gt;, ...  增加/覆盖作业的配置项</span><br><span class="line">        hdfs pipes -input &lt;path&gt;  输入目录</span><br><span class="line">        hdfs pipes -output &lt;path&gt; 输出目录</span><br><span class="line">        hdfs pipes -jar &lt;jar file&gt; Jar文件名</span><br><span class="line">        hdfs pipes -inputformat &lt;class&gt; InputFormat类</span><br><span class="line">        hdfs pipes -map &lt;class&gt; Java Map类</span><br><span class="line">        hdfs pipes -partitioner &lt;class&gt; Java Partitioner</span><br><span class="line">        hdfs pipes -reduce &lt;class&gt; Java Reduce类</span><br><span class="line">        hdfs pipes -writer &lt;class&gt; Java RecordWriter</span><br><span class="line">        hdfs pipes -program &lt;executable&gt; 可执行程序的URI</span><br><span class="line">        hdfs pipes -reduces &lt;num&gt; reduce个数</span><br><span class="line"></span><br><span class="line">2. 运维命令</span><br><span class="line">    整体启动：</span><br><span class="line">        命令：</span><br><span class="line">            一次性：</span><br><span class="line">                start-all.sh、stop-all.sh</span><br><span class="line">            分功能（推荐）：</span><br><span class="line">                [hdfs] start-dfs.sh、stop-dfs.sh</span><br><span class="line">                    master: NameNode(NN)、SecondaryNamenode(SNN)</span><br><span class="line">                    slave(s): DataNode(DN)</span><br><span class="line">                [yarn] start-yarn.sh、stop-yarn.sh</span><br><span class="line">                    master: ResourceManager(RM)</span><br><span class="line">                    slave(s): NodeManager(NM)</span><br><span class="line">            集群服务守护进程</span><br><span class="line">                jps 查看</span><br><span class="line"></span><br><span class="line">        背后的逻辑：</span><br><span class="line">            /soft/hadoop/sbin/start-all.sh   </span><br><span class="line">            --------------    </span><br><span class="line">                bin=`dirname <span class="string">&quot;<span class="variable">$&#123;BASH_SOURCE-$0&#125;</span>&quot;</span>`   //&#123;BASH_SOURCE-<span class="variable">$0</span>&#125;代表取得当前执行的shell文件所在的完整路径：/soft/hadoop/sbin/start-all.sh</span><br><span class="line">                libexec/hadoop-config.sh</span><br><span class="line">                hadoop/sbin/start-dfs.sh</span><br><span class="line">                hadoop/sbin/start-yarn.sh</span><br><span class="line"></span><br><span class="line">            sbin/start-dfs.sh</span><br><span class="line">            --------------</span><br><span class="line">                libexec/hadoop-config.sh</span><br><span class="line">                sbin/hadoop-daemons.sh --config .. --hostname .. start namenode ...</span><br><span class="line">                sbin/hadoop-daemons.sh --config .. --hostname .. start datanode ...</span><br><span class="line">                sbin/hadoop-daemons.sh --config .. --hostname .. start sescondarynamenode ...</span><br><span class="line">                sbin/hadoop-daemons.sh --config .. --hostname .. start zkfc ...         //</span><br><span class="line"></span><br><span class="line">            sbin/start-yarn.sh</span><br><span class="line">            --------------  </span><br><span class="line">                libexec/yarn-config.sh</span><br><span class="line">                sbin/yarn-daemon.sh --config <span class="variable">$YARN_CONF_DIR</span>  start resourcemanager</span><br><span class="line">                sbin/yarn-daemons.sh  --config <span class="variable">$YARN_CONF_DIR</span>  start nodemanager</span><br><span class="line"></span><br><span class="line">            sbin/hadoop-daemons.sh</span><br><span class="line">            ----------------------</span><br><span class="line">                libexec/hadoop-config.sh</span><br><span class="line">                slaves</span><br><span class="line">                hadoop-daemon.sh</span><br><span class="line"></span><br><span class="line">            sbin/hadoop-daemon.sh</span><br><span class="line">            -----------------------</span><br><span class="line">                libexec/hadoop-config.sh</span><br><span class="line">                bin/hdfs ....</span><br><span class="line"></span><br><span class="line">            sbin/yarn-daemon.sh</span><br><span class="line">            -----------------------</span><br><span class="line">                libexec/yarn-config.sh</span><br><span class="line">                bin/yarn</span><br><span class="line"></span><br><span class="line">    单独启动和关闭hadoop服务</span><br><span class="line">        1）启动名称节点</span><br><span class="line">            hadoop-daemon.sh start namenode</span><br><span class="line">        2）启动数据节点</span><br><span class="line">            1.在名称节点上进行启动用：hadoop-daemons.sh start datanode      //可一次性启动全部数据节点</span><br><span class="line">            2.在数据节点上进行单个启动用：hadoop-daemon.sh start datanode     //可逐一启动全部数据节点</span><br><span class="line">        3）启动次要名称节点      </span><br><span class="line">            hadoop-daemon.sh start secondarynamenode                    //名称节点上启用</span><br><span class="line">       4）停止一个数据节点</span><br><span class="line">            hadoop-daemon.sh stop datanode //在数据节点上单点操作 </span><br><span class="line">            hadoop-daemons.sh stop datanode //在名称节点上多点操作</span><br><span class="line">        5）启动resourcemanager</span><br><span class="line">            yarn-daemon.sh start resourcemanager //名称节点上启用</span><br><span class="line">        6）启动nodemanager </span><br><span class="line">            bin/yarn-daemons.sh start nodemanager           //在名称节点上启用全部数据节点</span><br><span class="line"> </span><br><span class="line">    安全模式： </span><br><span class="line">        NameNode在启动时会自动进入安全模式，安全模式是NameNode的一种状态，在这个阶段，文件系统不允许有任何修改。</span><br><span class="line">        系统显示Name node <span class="keyword">in</span> safe mode，说明系统正处于安全模式，这时只需要等待几十秒即可。</span><br><span class="line">        1. 退出安全模式：</span><br><span class="line">            hadoop dfsadmin -safemode leave</span><br><span class="line">        2. 进入安全模式：</span><br><span class="line">            hadoop dfsadmin -safemode enter</span><br><span class="line"> </span><br><span class="line">3. 常用 hadoop 和 hdfs 命令</span><br><span class="line">    bin/hadoop</span><br><span class="line">    ------------------------</span><br><span class="line">        hadoop verion       //版本</span><br><span class="line">        hadoop fs           //运行一个常用的文件系统客户端.</span><br><span class="line">        hadoop jar          //运行jar包</span><br><span class="line">        distcp              ？//递归拷贝文件或目录</span><br><span class="line">        hadoop classpath    //设置类路径</span><br><span class="line">        hadoop checknative  //检测本地的库文件</span><br><span class="line"></span><br><span class="line">    bin/hdfs</span><br><span class="line">    ------------------------</span><br><span class="line">        dfs                     // === hadoop fs</span><br><span class="line">        classpath          </span><br><span class="line">        namenode -format   </span><br><span class="line">        secondarynamenode  </span><br><span class="line">        namenode           </span><br><span class="line">        journalnode        </span><br><span class="line">        zkfc               </span><br><span class="line">        datanode           </span><br><span class="line">        dfsadmin           </span><br><span class="line">        haadmin            </span><br><span class="line">        fsck               </span><br><span class="line">        balancer           </span><br><span class="line">        jmxget             </span><br><span class="line">        mover              </span><br><span class="line"></span><br><span class="line">        oiv                </span><br><span class="line">        oiv_legacy         </span><br><span class="line">        oev                </span><br><span class="line">        fetchdt            </span><br><span class="line">        getconf            </span><br><span class="line">        groups             </span><br><span class="line">        snapshotDiff       </span><br><span class="line"></span><br><span class="line">        lsSnapshottableDir </span><br><span class="line"></span><br><span class="line">        portmap            </span><br><span class="line">        nfs3               </span><br><span class="line">        cacheadmin         </span><br><span class="line">        crypto             </span><br><span class="line">        storagepolicies    </span><br><span class="line">        version </span><br><span class="line">    hdfs 常用命令举例： </span><br><span class="line">        $&gt;hdfs dfs -mkdir - p /user/icss/hadoop                 //p递归创建</span><br><span class="line">        $&gt;hdfs dfs -ls -R /user/icss/hadoop                    //-R递归</span><br><span class="line">        $&gt;hdfs dfs -rm -r -f /user/icss/hadoop                // 强制？删除目录</span><br><span class="line">            hdfs 都发生 -rmr /user/icss/hadoop </span><br><span class="line">            删除hadoop上指定文件</span><br><span class="line">                hdfs  dfs –rm [文件地址]</span><br><span class="line">                    hdfs dfs –rm /user/t/ok.txt</span><br><span class="line">            删除hadoop上指定文件夹（包含子目录等）</span><br><span class="line">                hdfs dfs –rm [目录地址]</span><br><span class="line">                    hdfs dfs –rmr /user/t</span><br><span class="line">        $&gt;hdfs dfs --<span class="built_in">help</span>                       //查看帮助</span><br><span class="line">        $&gt;hdfs dfs -ls -R   /                   //显示目录结构</span><br><span class="line">        $&gt;hdfs dfs -lsr /                       //显示目录结构</span><br><span class="line">        $&gt;hdfs dfs -put 1.txt 2.txt /user/icss    //本地文件上传到hdfs文件</span><br><span class="line">        $&gt;hdfs dfs -get /user/icss/1.txt a.txt    //下载hdfs文件到本地</span><br><span class="line">        $&gt;hdfs dfs –getmerge /user /home/t      //将hadoop指定目录下所有内容保存为一个文件，同时down至本地</span><br><span class="line">        $&gt;hdfs dfs -cat /hdfs上一个文本文件        //显示hdfs上文件内容</span><br><span class="line">        $&gt;hdfs dfs -touchz /hdfs上一个文件名      //在hdfs上新建一个空文件</span><br><span class="line">        $&gt;hdfs dfs -mv /data/test03.txt /data/test.txt      //将hadoop上某个文件重命名</span><br><span class="line">        $&gt;hadoop job –<span class="built_in">kill</span>  [job-id]        //将正在运行的hadoop作业<span class="built_in">kill</span>掉</span><br><span class="line">        </span><br><span class="line">    补充</span><br><span class="line">        1.对hdfs操作的命令格式是hdfs dfs</span><br><span class="line">            1.1 -ls 表示对hdfs下一级目录的查看</span><br><span class="line">            1.2 -lsr 表示对hdfs目录的递归查看</span><br><span class="line">            1.3 -mkdir 创建目录</span><br><span class="line">            1.4 -put 从Linux上传文件到hdfs</span><br><span class="line">            1.5 -get 从hdfs下载文件到linux</span><br><span class="line">            1.6 -text 查看文件内容</span><br><span class="line">            1.7 -rm 表示删除文件</span><br><span class="line">            1.7 -rmr 表示递归删除文件</span><br><span class="line">        2.hdfs在对数据存储进行block划分时，如果文件大小超过block，那么按照block大小进行划分；不如block size的，划分为一个块，是实际数据大小。</span><br><span class="line">        3.hadoop常用命令：</span><br><span class="line">            hdfs dfs  查看Hadoop HDFS支持的所有命令   </span><br><span class="line">            hdfs dfs –ls  列出目录及文件信息   </span><br><span class="line">            hdfs dfs –lsr  循环列出目录、子目录及文件信息      </span><br><span class="line">            hdfs dfs –tail /user/icss/test.txt  查看最后1KB的内容   </span><br><span class="line">            hdfs dfs –copyFromLocal test.txt /user/icss/test.txt  从本地文件系统复制文件到HDFS文件系统，等同于put命令   </span><br><span class="line">            hdfs dfs –copyToLocal /user/icss/test.txt test.txt  从HDFS文件系统复制文件到本地文件系统，等同于get命令   </span><br><span class="line">            hdfs dfs –chgrp [-R] /user/icss  修改HDFS系统中/user/icss目录所属群组，选项-R递归执行，跟linux命令一样   </span><br><span class="line">            hdfs dfs –chown [-R] /user/icss  修改HDFS系统中/user/icss目录拥有者，选项-R递归执行   </span><br><span class="line">            hdfs dfs –chmod [-R] MODE /user/icss  修改HDFS系统中/user/sunlightcs目录权限，MODE可以为相应权限的3位数或+/-&#123;rwx&#125;，选项-R递归执行</span><br><span class="line">            hdfs dfs –count [-q] PATH  查看PATH目录下，子目录数、文件数、文件大小、文件名/目录名   </span><br><span class="line">            hdfs dfs –cp SRC [SRC …] DST       将文件从SRC复制到DST，如果指定了多个SRC，则DST必须为一个目录   </span><br><span class="line">            hdfs dfs –du PATH  显示该目录中每个文件或目录的大小   </span><br><span class="line">            hdfs dfs –dus PATH  类似于du，PATH为目录时，会显示该目录的总大小   </span><br><span class="line">            hdfs dfs –expunge  清空回收站，文件被删除时，它首先会移到临时目录.Trash/中，当超过延迟时间之后，文件才会被永久删除   </span><br><span class="line">            hdfs dfs –getmerge SRC [SRC …] LOCALDST [addnl]   获取由SRC指定的所有文件，将它们合并为单个文件，并写入本地文件系统中的LOCALDST，选项addnl将在每个文件的末尾处加上一个换行符   </span><br><span class="line">            hdfs dfs –<span class="built_in">test</span> –[ezd] PATH     对PATH进行如下类型的检查：-e PATH是否存在，如果PATH存在，返回0，否则返回1；-z 文件是否为空，如果长度为0，返回0，否则返回1； -d 是否为目录，如果PATH为目录，返回0，否则返回1  </span><br><span class="line">            hdfs dfs –text PATH  显示文件的内容，当文件为文本文件时，等同于cat；文件为压缩格式（gzip以及hadoop的二进制序列文件格式）时，会先解压缩    </span><br><span class="line">            hdfs dfs –<span class="built_in">help</span> ls  查看某个[ls]命令的帮助文档</span><br><span class="line"></span><br><span class="line">        </span><br><span class="line">Hadoop 3 端口号的改变</span><br><span class="line">    分类 	应用 	Haddop 2.x port 	Haddop 3 port</span><br><span class="line">    NNPorts 	Namenode 	8020 	9820</span><br><span class="line">    NNPorts 	NN HTTP UI 	50070 	9870</span><br><span class="line">    NNPorts 	NN HTTPS UI 	50470 	9871</span><br><span class="line">    SNN ports 	SNN HTTP 	50091 	9869</span><br><span class="line">    SNN ports 	SNN HTTP UI 	50090 	9868</span><br><span class="line">    DN ports 	DN IPC 	50020 	9867</span><br><span class="line">    DN ports 	DN 	50010 	9866</span><br><span class="line">    DN ports 	DN HTTP UI 	50075 	9864</span><br><span class="line">    DN ports 	Namenode 	50475 	9865</span><br><span class="line">    </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">https://blog.csdn.net/weixin_43215250/article/details/84819692</span><br><span class="line">    https://www.csdn.net/gather_25/MtTaYg0sNDI3Mi1ibG9n.html</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="可能出现的问题"><a href="#可能出现的问题" class="headerlink" title="可能出现的问题"></a>可能出现的问题</h2><h4 id="1-没有datanode节点"><a href="#1-没有datanode节点" class="headerlink" title="1. 没有datanode节点"></a>1. 没有datanode节点</h4><p><img src="https://i.niupic.com/images/2021/07/30/9psQ.png"></p>
+<p><img src="https://i.niupic.com/images/2021/07/30/9psP.png"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## 正确命令</span></span><br><span class="line"> <span class="comment">## slave</span></span><br><span class="line"> vim /home/vagrant/hadoopdata/dfs/data/current/VERSION</span><br><span class="line"> </span><br><span class="line"> <span class="comment">## master</span></span><br><span class="line"> vim /home/vagrant/hadoopdata/dfs/name/current/VERSION</span><br><span class="line"> 54d59e8e-b002-4ca3-817a-a9f4c8166dc5</span><br><span class="line"> </span><br><span class="line"> <span class="comment">## clusterID 应该要相同,layoutVersion可以不改</span></span><br></pre></td></tr></table></figure>
+
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/07/29/Hadoop/" data-id="ckrol19ns0002it5b3mf893l9" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/07/29/Hadoop/" data-id="ckscnkdsh001hsy5b816lgljq" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hadoop/" rel="tag">Hadoop</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%99%9A%E6%8B%9F%E6%9C%BA/" rel="tag">虚拟机</a></li></ul>
@@ -248,7 +379,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/07/28/%E8%99%9A%E6%8B%9F%E6%9C%BA2/" data-id="ckrol19oc000qit5b268wdy9o" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/07/28/%E8%99%9A%E6%8B%9F%E6%9C%BA2/" data-id="ckscnkdrf000psy5b1hr0foq6" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%99%9A%E6%8B%9F%E6%9C%BA/" rel="tag">虚拟机</a></li></ul>
@@ -371,7 +502,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/07/27/Docker-in-Linux/" data-id="ckrol19no0001it5b1hbfeq6f" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/07/27/Docker-in-Linux/" data-id="ckscnkdpf0001sy5b8x21flpf" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/" rel="tag">Docker</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li></ul>
@@ -586,7 +717,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/07/26/%E8%99%9A%E6%8B%9F%E6%9C%BA/" data-id="ckrol19ob000nit5bfnq275c4" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/07/26/%E8%99%9A%E6%8B%9F%E6%9C%BA/" data-id="ckscnkdr9000nsy5b8nogb6y4" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li></ul>
@@ -643,7 +774,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/07/24/%E7%AC%AC%E5%8D%81%E4%B8%80%E5%A4%A9/" data-id="ckrol19o6000git5bf1oj4nva" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/07/24/%E7%AC%AC%E5%8D%81%E4%B8%80%E5%A4%A9/" data-id="ckscnkdr2000isy5b3r0iaj1t" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/" rel="tag">浏览器</a></li></ul>
@@ -869,7 +1000,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/07/23/%E7%AC%AC%E5%8D%81%E5%A4%A9/" data-id="ckrol19o9000jit5bbbn082tk" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/07/23/%E7%AC%AC%E5%8D%81%E5%A4%A9/" data-id="ckscnkdr4000ksy5bbq3gegl6" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%88%AC%E8%99%AB/" rel="tag">爬虫</a></li></ul>
@@ -980,7 +1111,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/07/21/%E7%AC%AC%E4%B9%9D%E5%A4%A9/" data-id="ckrol19o10009it5bguqxc4dn" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/07/21/%E7%AC%AC%E4%B9%9D%E5%A4%A9/" data-id="ckscnkdq10008sy5b9cz21pqy" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%96%87%E4%BB%B6/" rel="tag">文件</a></li></ul>
@@ -1097,7 +1228,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/07/20/%E7%AC%AC%E5%85%AB%E5%A4%A9/" data-id="ckrol19o7000hit5b2kmpg49t" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/07/20/%E7%AC%AC%E5%85%AB%E5%A4%A9/" data-id="ckscnkdqb000dsy5bd2op8u5f" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/" rel="tag">Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%88%AC%E8%99%AB/" rel="tag">爬虫</a></li></ul>
@@ -1414,112 +1545,10 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/07/19/%E7%AC%AC%E4%B8%83%E5%A4%A9/" data-id="ckrol19nx0005it5b72bfdnaz" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/07/19/%E7%AC%AC%E4%B8%83%E5%A4%A9/" data-id="ckscnkdpx0005sy5b4ix1h8kb" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/http/" rel="tag">http</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%88%AC%E8%99%AB/" rel="tag">爬虫</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-第六天" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2021/07/17/%E7%AC%AC%E5%85%AD%E5%A4%A9/" class="article-date">
-  <time datetime="2021-07-17T00:53:42.000Z" itemprop="datePublished">2021-07-17</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/07/17/%E7%AC%AC%E5%85%AD%E5%A4%A9/">第六篇博客</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="回顾"><a href="#回顾" class="headerlink" title="回顾"></a>回顾</h2><h3 id="JDBC"><a href="#JDBC" class="headerlink" title="JDBC"></a>JDBC</h3><ol>
-<li><p>Connection PreparedStatement(提前预编译,安全性更高,速度更快) ResultSet(下标从1开始)</p>
-</li>
-<li><p>规范成面向对象的编程和设计</p>
-<ul>
-<li>基于接口和泛型的父接口</li>
-<li>基于共性方法的父类、在具体实现类中运用</li>
-</ul>
-</li>
-<li><p>项目的规范</p>
-<ul>
-<li>maven projet (GAV+ 添加依赖-&gt;pom.xml) </li>
-<li>package、Use依赖关系</li>
-</ul>
-</li>
-</ol>
-<h2 id="共性问题"><a href="#共性问题" class="headerlink" title="共性问题"></a>共性问题</h2><h3 id="实体类关联的实现"><a href="#实体类关联的实现" class="headerlink" title="实体类关联的实现"></a>实体类关联的实现</h3><ol>
-<li><p>实体</p>
-<ul>
-<li>Book(id,name,price)</li>
-<li>Press(id,name)</li>
-<li>Author(id,name,gender)</li>
-</ul>
-</li>
-<li><p>实体之间的关系</p>
-<p>press &lt; 1:n &gt; Book</p>
-<p>Book &lt; m:n&gt; Author</p>
-</li>
-<li><p>DBtable</p>
-<ul>
-<li>Press(id,name)</li>
-<li>Books(id,name,price,pressId)</li>
-<li>Author(id,name,gender)</li>
-<li><strong>BookAndAuthor(id,bookid,authorId)</strong></li>
-</ul>
-</li>
-<li><p>实体类的设计——双向关联关系的实习现</p>
-<ul>
-<li><p>双向关系1:n的一边,添加Set 容器属性</p>
-</li>
-<li><p>多对多关系中,每一个组成关系的实体中,添加两个Set 属性</p>
-</li>
-<li><p>Press(id,name,Set&lt; Book &gt; books)</p>
-</li>
-<li><p>Book(id,name,price, Press ,pressId,Set&lt; Author &gt;authors)</p>
-</li>
-<li><p>Author(id,name,gender,Set&lt; Book &gt;books )</p>
-</li>
-</ul>
-</li>
-</ol>
-<h3 id="需要解决的问题"><a href="#需要解决的问题" class="headerlink" title="需要解决的问题"></a>需要解决的问题</h3><ol>
-<li><p>select max(id) from tablename</p>
-<p>没有同步,线程不安全——不推荐</p>
-</li>
-<li><p>select last_insert_id()</p>
-</li>
-<li><p>Dao直接对数据库进行操作,不考虑其他逻辑. 格外的复杂逻辑放在Service模块中</p>
-</li>
-</ol>
-<h2 id="爬虫"><a href="#爬虫" class="headerlink" title="爬虫"></a>爬虫</h2><h3 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h3><h3 id="本质-共性步骤"><a href="#本质-共性步骤" class="headerlink" title="本质:共性步骤"></a>本质:共性步骤</h3><h3 id="实现爬虫层次"><a href="#实现爬虫层次" class="headerlink" title="实现爬虫层次"></a>实现爬虫层次</h3><h3 id="学习资料"><a href="#学习资料" class="headerlink" title="学习资料"></a>学习资料</h3><h3 id="推荐网站"><a href="#推荐网站" class="headerlink" title="推荐网站"></a>推荐网站</h3><ol>
-<li><a target="_blank" rel="noopener" href="https://www.kaggle.com/">kagge</a></li>
-<li><a target="_blank" rel="noopener" href="https://tianchi.aliyun.com/">天池</a></li>
-</ol>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2021/07/17/%E7%AC%AC%E5%85%AD%E5%A4%A9/" data-id="ckrol19o4000dit5b5xer3ag6" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag">数据库</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%88%AC%E8%99%AB/" rel="tag">爬虫</a></li></ul>
 
     </footer>
   </div>
@@ -1546,7 +1575,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker/" rel="tag">Docker</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hadoop/" rel="tag">Hadoop</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/" rel="tag">Java</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/http/" rel="tag">http</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AE%89%E8%A3%85/" rel="tag">安装</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag">数据库</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%96%87%E4%BB%B6/" rel="tag">文件</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/" rel="tag">浏览器</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%88%AC%E8%99%AB/" rel="tag">爬虫</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%99%9A%E6%8B%9F%E6%9C%BA/" rel="tag">虚拟机</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%A1%B9%E7%9B%AE%E5%88%86%E6%9E%90/" rel="tag">项目分析</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker/" rel="tag">Docker</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hadoop/" rel="tag">Hadoop</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/" rel="tag">Java</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hdfs/" rel="tag">hdfs</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/http/" rel="tag">http</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AE%89%E8%A3%85/" rel="tag">安装</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag">数据库</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%96%87%E4%BB%B6/" rel="tag">文件</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/" rel="tag">浏览器</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%88%AC%E8%99%AB/" rel="tag">爬虫</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%99%9A%E6%8B%9F%E6%9C%BA/" rel="tag">虚拟机</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%A1%B9%E7%9B%AE%E5%88%86%E6%9E%90/" rel="tag">项目分析</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -1556,7 +1585,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Docker/" style="font-size: 10px;">Docker</a> <a href="/tags/Hadoop/" style="font-size: 10px;">Hadoop</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Linux/" style="font-size: 15px;">Linux</a> <a href="/tags/http/" style="font-size: 10px;">http</a> <a href="/tags/%E5%AE%89%E8%A3%85/" style="font-size: 15px;">安装</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" style="font-size: 15px;">数据库</a> <a href="/tags/%E6%96%87%E4%BB%B6/" style="font-size: 10px;">文件</a> <a href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/" style="font-size: 15px;">浏览器</a> <a href="/tags/%E7%88%AC%E8%99%AB/" style="font-size: 20px;">爬虫</a> <a href="/tags/%E8%99%9A%E6%8B%9F%E6%9C%BA/" style="font-size: 15px;">虚拟机</a> <a href="/tags/%E9%A1%B9%E7%9B%AE%E5%88%86%E6%9E%90/" style="font-size: 10px;">项目分析</a>
+      <a href="/tags/Docker/" style="font-size: 10px;">Docker</a> <a href="/tags/Hadoop/" style="font-size: 10px;">Hadoop</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Linux/" style="font-size: 15px;">Linux</a> <a href="/tags/hdfs/" style="font-size: 10px;">hdfs</a> <a href="/tags/http/" style="font-size: 10px;">http</a> <a href="/tags/%E5%AE%89%E8%A3%85/" style="font-size: 15px;">安装</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" style="font-size: 15px;">数据库</a> <a href="/tags/%E6%96%87%E4%BB%B6/" style="font-size: 10px;">文件</a> <a href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/" style="font-size: 15px;">浏览器</a> <a href="/tags/%E7%88%AC%E8%99%AB/" style="font-size: 20px;">爬虫</a> <a href="/tags/%E8%99%9A%E6%8B%9F%E6%9C%BA/" style="font-size: 15px;">虚拟机</a> <a href="/tags/%E9%A1%B9%E7%9B%AE%E5%88%86%E6%9E%90/" style="font-size: 10px;">项目分析</a>
     </div>
   </div>
 
@@ -1565,7 +1594,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">七月 2021</a><span class="archive-list-count">15</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">七月 2021</a><span class="archive-list-count">16</span></li></ul>
     </div>
   </div>
 
@@ -1576,6 +1605,10 @@
     <h3 class="widget-title">最新文章</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2021/07/31/hdfs/">hdfs</a>
+          </li>
         
           <li>
             <a href="/2021/07/29/Hadoop/">Hadoop</a>
@@ -1591,10 +1624,6 @@
         
           <li>
             <a href="/2021/07/26/%E8%99%9A%E6%8B%9F%E6%9C%BA/">虚拟机</a>
-          </li>
-        
-          <li>
-            <a href="/2021/07/24/%E7%AC%AC%E5%8D%81%E4%B8%80%E5%A4%A9/">第十一天</a>
           </li>
         
       </ul>

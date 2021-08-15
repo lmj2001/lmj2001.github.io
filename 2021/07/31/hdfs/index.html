@@ -5,20 +5,19 @@
   
 
   
-  <title>第六篇博客 | 愿你生命的每一天都充满美好</title>
+  <title>hdfs | 愿你生命的每一天都充满美好</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="回顾JDBC Connection PreparedStatement(提前预编译,安全性更高,速度更快) ResultSet(下标从1开始)  规范成面向对象的编程和设计  基于接口和泛型的父接口 基于共性方法的父类、在具体实现类中运用   项目的规范  maven projet (GAV+ 添加依赖-&gt;pom.xml)  package、Use依赖关系    共性问题实体类关联的实现 实">
+  <meta name="description" content="Java &amp; Python HDFS讨论运行位置Local:   Linux : Hadoop &amp; IDEA   Linux Server : CLI Hadoop     Remote: WebUI —— http:&#x2F;&#x2F;master:9870.   hdfs:&#x2F;&#x2F;master:9000&#x2F;hdfspath  OS: Windows + IDEA    jar:  local: ha">
 <meta property="og:type" content="article">
-<meta property="og:title" content="第六篇博客">
-<meta property="og:url" content="http://example.com/2021/07/17/%E7%AC%AC%E5%85%AD%E5%A4%A9/index.html">
+<meta property="og:title" content="hdfs">
+<meta property="og:url" content="http://example.com/2021/07/31/hdfs/index.html">
 <meta property="og:site_name" content="愿你生命的每一天都充满美好">
-<meta property="og:description" content="回顾JDBC Connection PreparedStatement(提前预编译,安全性更高,速度更快) ResultSet(下标从1开始)  规范成面向对象的编程和设计  基于接口和泛型的父接口 基于共性方法的父类、在具体实现类中运用   项目的规范  maven projet (GAV+ 添加依赖-&gt;pom.xml)  package、Use依赖关系    共性问题实体类关联的实现 实">
+<meta property="og:description" content="Java &amp; Python HDFS讨论运行位置Local:   Linux : Hadoop &amp; IDEA   Linux Server : CLI Hadoop     Remote: WebUI —— http:&#x2F;&#x2F;master:9870.   hdfs:&#x2F;&#x2F;master:9000&#x2F;hdfspath  OS: Windows + IDEA    jar:  local: ha">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2021-07-17T00:53:42.000Z">
-<meta property="article:modified_time" content="2021-07-17T10:02:04.291Z">
+<meta property="article:published_time" content="2021-07-31T06:47:55.000Z">
+<meta property="article:modified_time" content="2021-07-31T09:43:40.286Z">
 <meta property="article:author" content="MainJay">
-<meta property="article:tag" content="爬虫">
-<meta property="article:tag" content="数据库">
+<meta property="article:tag" content="hdfs">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternate" href="/atom.xml" title="愿你生命的每一天都充满美好" type="application/atom+xml">
@@ -70,10 +69,10 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-第六天" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-hdfs" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2021/07/17/%E7%AC%AC%E5%85%AD%E5%A4%A9/" class="article-date">
-  <time datetime="2021-07-17T00:53:42.000Z" itemprop="datePublished">2021-07-17</time>
+    <a href="/2021/07/31/hdfs/" class="article-date">
+  <time datetime="2021-07-31T06:47:55.000Z" itemprop="datePublished">2021-07-31</time>
 </a>
     
   </div>
@@ -84,7 +83,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      第六篇博客
+      hdfs
     </h1>
   
 
@@ -92,78 +91,84 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="回顾"><a href="#回顾" class="headerlink" title="回顾"></a>回顾</h2><h3 id="JDBC"><a href="#JDBC" class="headerlink" title="JDBC"></a>JDBC</h3><ol>
-<li><p>Connection PreparedStatement(提前预编译,安全性更高,速度更快) ResultSet(下标从1开始)</p>
-</li>
-<li><p>规范成面向对象的编程和设计</p>
+        <h2 id="Java-amp-Python-HDFS"><a href="#Java-amp-Python-HDFS" class="headerlink" title="Java &amp; Python HDFS"></a>Java &amp; Python HDFS</h2><h3 id="讨论"><a href="#讨论" class="headerlink" title="讨论"></a>讨论</h3><h4 id="运行位置"><a href="#运行位置" class="headerlink" title="运行位置"></a>运行位置</h4><p>Local: </p>
 <ul>
-<li>基于接口和泛型的父接口</li>
-<li>基于共性方法的父类、在具体实现类中运用</li>
-</ul>
+<li><p>Linux : Hadoop &amp; IDEA </p>
 </li>
-<li><p>项目的规范</p>
+<li><p>Linux Server : CLI Hadoop   </p>
+</li>
+<li><p>Remote: WebUI —— <a target="_blank" rel="noopener" href="http://master:9870/">http://master:9870</a>.   hdfs://master:9000/hdfspath</p>
+</li>
+<li><p>OS: Windows + IDEA </p>
+</li>
+</ul>
+<p>jar:</p>
 <ul>
-<li>maven projet (GAV+ 添加依赖-&gt;pom.xml) </li>
-<li>package、Use依赖关系</li>
-</ul>
+<li><p>local: hadoop jar xx.jar</p>
 </li>
+<li><p>remote: java jar xx.jar </p>
+</li>
+<li><p>IDEA(remote, run|debug</p>
+</li>
+</ul>
+<p>IDE : IDEA </p>
+<h2 id="remote-idea-开发-amp-运行"><a href="#remote-idea-开发-amp-运行" class="headerlink" title="remote idea 开发&amp;运行"></a>remote idea 开发&amp;运行</h2><ul>
+<li><p>byURL : 下载 hdfs 上资源</p>
+</li>
+<li><p>借助 HDFS API 实现 资源操作</p>
+</li>
+<li><p>指明操作用户,设置 client os 的系统环境变量</p>
+</li>
+<li><p>在代码中设置 hdfs 操作用户 HADOOP_USER_NAME<br>  获取 hdfs 的句柄<br>   <a target="_blank" rel="noopener" href="https://wiki.apache.org/hadoop/WindowsProblems">https://wiki.apache.org/hadoop/WindowsProblems</a><br>   <a target="_blank" rel="noopener" href="https://cwiki.apache.org/confluence/display/HADOOP2/WindowsProblems">https://cwiki.apache.org/confluence/display/HADOOP2/WindowsProblems</a><br>   <a target="_blank" rel="noopener" href="https://github.com/steveloughran/winutils">https://github.com/steveloughran/winutils</a><br>  解压,对应版本,放置在 c:/dev/hadoop</p>
+</li>
+<li><p>MR(Java) =&gt; Hadoop run<br><a target="_blank" rel="noopener" href="http://hadoop.apache.org/docs/r1.0.4/cn/mapred_tutorial.html">http://hadoop.apache.org/docs/r1.0.4/cn/mapred_tutorial.html</a></p>
+</li>
+</ul>
+<h3 id="准备数据"><a href="#准备数据" class="headerlink" title="准备数据"></a>准备数据</h3><ul>
+<li><p>upload hdfs  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hdfs dfs -mkdir -p /input/mr/wc01</span><br><span class="line">hdfs dfs -put /share/mr/data/* /input/mr/wc01</span><br><span class="line">mr -- java </span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="编写程序"><a href="#编写程序" class="headerlink" title="编写程序"></a>编写程序</h3><ol>
+<li><p>new maven project<br> 添加依赖 == hadoop-client</p>
+</li>
+<li><p>override map</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">WCGenderMapper</span> <span class="keyword">extends</span> <span class="title">Mapper</span>&lt;<span class="title">LongWritable</span>, <span class="title">Text</span>, <span class="title">Text</span>, <span class="title">IntWritable</span>&gt;</span></span><br><span class="line"><span class="class">//<span class="keyword">extends</span> <span class="title">org</span>.<span class="title">apache</span>.<span class="title">hadoop</span>.<span class="title">mapreduce</span>.<span class="title">Mapper</span></span></span><br></pre></td></tr></table></figure>
+
+<p> &lt;LongWritable, Text, Text, IntWritable&gt;分别对应 mapper 输入的 key,value 和 mapper 输出的 key,value </p>
+<p> 在 Hadoop 中的可序列化的数据类型 </p>
+</li>
+<li><p>override reduce</p>
+<pre><code> 获取每一行, 拆分, 生成 mapper 输出的 midMap&lt;行中每个单词, 1&gt;
+</code></pre>
+   <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">WCGenderReducer</span> <span class="keyword">extends</span> <span class="title">Reducer</span>&lt;<span class="title">Text</span>, <span class="title">IntWritable</span>, <span class="title">Text</span>, <span class="title">LongWritable</span>&gt;  </span></span><br><span class="line"><span class="class">//<span class="title">exitends</span> <span class="title">org</span>.<span class="title">apache</span>.<span class="title">hadoop</span>.<span class="title">mapreduce</span>.<span class="title">Reduce</span></span></span><br></pre></td></tr></table></figure>
+
+<p>   &lt;Text, IntWritable, Text, LongWritable&gt; 分别对应 mapper 的输出的 key,value 和 最终的输出结果的 key,value </p>
+<p>   在 Hadoop 中的可序列化的数据类型 </p>
+</li>
+<li><p>遍历输出<br>  遍历 values, 统计, 写入最终 destMap&lt;每个单词, 单词出现次数&gt; 中<br>  maven-&gt;项目名称-&gt;lifecycle-&gt;package</p>
+</li>
+<li><p>上传 jar, 在 hadoop 运行 jar </p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hadoop jar mymr.jar /input/mr/wc01 /output/wc01</span><br></pre></td></tr></table></figure></li>
 </ol>
-<h2 id="共性问题"><a href="#共性问题" class="headerlink" title="共性问题"></a>共性问题</h2><h3 id="实体类关联的实现"><a href="#实体类关联的实现" class="headerlink" title="实体类关联的实现"></a>实体类关联的实现</h3><ol>
-<li><p>实体</p>
-<ul>
-<li>Book(id,name,price)</li>
-<li>Press(id,name)</li>
-<li>Author(id,name,gender)</li>
-</ul>
-</li>
-<li><p>实体之间的关系</p>
-<p>press &lt; 1:n &gt; Book</p>
-<p>Book &lt; m:n&gt; Author</p>
-</li>
-<li><p>DBtable</p>
-<ul>
-<li>Press(id,name)</li>
-<li>Books(id,name,price,pressId)</li>
-<li>Author(id,name,gender)</li>
-<li><strong>BookAndAuthor(id,bookid,authorId)</strong></li>
-</ul>
-</li>
-<li><p>实体类的设计——双向关联关系的实习现</p>
-<ul>
-<li><p>双向关系1:n的一边,添加Set 容器属性</p>
-</li>
-<li><p>多对多关系中,每一个组成关系的实体中,添加两个Set 属性</p>
-</li>
-<li><p>Press(id,name,Set&lt; Book &gt; books)</p>
-</li>
-<li><p>Book(id,name,price, Press ,pressId,Set&lt; Author &gt;authors)</p>
-</li>
-<li><p>Author(id,name,gender,Set&lt; Book &gt;books )</p>
-</li>
-</ul>
-</li>
+<h2 id="MapReduce"><a href="#MapReduce" class="headerlink" title="MapReduce"></a>MapReduce</h2><h3 id="运行方式"><a href="#运行方式" class="headerlink" title="运行方式"></a>运行方式</h3><h4 id="jar"><a href="#jar" class="headerlink" title="jar"></a>jar</h4><p>​      upload </p>
+<p>​       remote hadoop cluster package</p>
+<h4 id="IDEA-本地执行"><a href="#IDEA-本地执行" class="headerlink" title="IDEA 本地执行"></a>IDEA 本地执行</h4><ol>
+<li>input/output src</li>
+<li>在当前项目中,修改Hadoop源代码NativeIO</li>
 </ol>
-<h3 id="需要解决的问题"><a href="#需要解决的问题" class="headerlink" title="需要解决的问题"></a>需要解决的问题</h3><ol>
-<li><p>select max(id) from tablename</p>
-<p>没有同步,线程不安全——不推荐</p>
-</li>
-<li><p>select last_insert_id()</p>
-</li>
-<li><p>Dao直接对数据库进行操作,不考虑其他逻辑. 格外的复杂逻辑放在Service模块中</p>
-</li>
-</ol>
-<h2 id="爬虫"><a href="#爬虫" class="headerlink" title="爬虫"></a>爬虫</h2><h3 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h3><h3 id="本质-共性步骤"><a href="#本质-共性步骤" class="headerlink" title="本质:共性步骤"></a>本质:共性步骤</h3><h3 id="实现爬虫层次"><a href="#实现爬虫层次" class="headerlink" title="实现爬虫层次"></a>实现爬虫层次</h3><h3 id="学习资料"><a href="#学习资料" class="headerlink" title="学习资料"></a>学习资料</h3><h3 id="推荐网站"><a href="#推荐网站" class="headerlink" title="推荐网站"></a>推荐网站</h3><ol>
-<li><a target="_blank" rel="noopener" href="https://www.kaggle.com/">kagge</a></li>
-<li><a target="_blank" rel="noopener" href="https://tianchi.aliyun.com/">天池</a></li>
+<p>​      建议:运行前重启,或者重新修改pom文件并且刷新</p>
+<ol start="3">
+<li>设置本地运行的启动参数</li>
+<li>修改</li>
 </ol>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/07/17/%E7%AC%AC%E5%85%AD%E5%A4%A9/" data-id="ckscnkdqz000gsy5b5eoafl6l" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/07/31/hdfs/" data-id="ckscnkdpl0002sy5b6lur1cvz" class="article-share-link">Share</a>
       
       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag">数据库</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%88%AC%E8%99%AB/" rel="tag">爬虫</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hdfs/" rel="tag">hdfs</a></li></ul>
 
     </footer>
   </div>
@@ -171,19 +176,10 @@
     
 <nav id="article-nav">
   
-    <a href="/2021/07/19/%E7%AC%AC%E4%B8%83%E5%A4%A9/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          第七篇博客
-        
-      </div>
-    </a>
   
-  
-    <a href="/2021/07/16/%E7%AC%AC%E4%BA%94%E5%A4%A9/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2021/07/29/Hadoop/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">第五篇博客</div>
+      <div class="article-nav-title">Hadoop</div>
     </a>
   
 </nav>
